@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Grafo {
 
+	
 	public boolean perteneceNodo(int id) {
 		
 		
