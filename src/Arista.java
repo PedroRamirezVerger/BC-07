@@ -4,6 +4,7 @@ public class Arista {
 	private int nodoF;
 	private String calle;
 	private int longitud;
+	
 	public int getNodoI() {
 		return nodoI;
 	}
