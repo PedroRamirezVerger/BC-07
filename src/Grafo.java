@@ -15,7 +15,7 @@ public class Grafo {
 		 return null; 
 	 }
 	 
-	 public ArrayList<Arista> adyacentesNodo(int id){
+	 public ArrayList<Nodo> adyacentesNodo(int id){
 		
 		 
 		 return null; 
