@@ -25,7 +25,6 @@ class Grafo:
 		return coordenadas
 
 	def adyacentesNodo(self, id):
-		#v=self.g.vs["osmid"==id]
 		adyacentes=[]
 		s=[""]
 		i=0
