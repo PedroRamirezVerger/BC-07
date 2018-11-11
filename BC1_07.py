@@ -1,6 +1,7 @@
 import json
 import igraph
 from igraph import *
+from random import randint
 
 class Grafo:
 	g=Graph()
@@ -27,7 +28,6 @@ class Grafo:
 	def adyacentesNodo(self, id):
 		adyacentes=[]
 		s=[""]
-		i=0
 		vertices=self.g.vs
 
 		if self.perteneceNodo(id):
@@ -46,9 +46,9 @@ class Grafo:
 		return adyacentes
 
 class Estado:
-	def __init__(self, nodo):
-		self.nActual=nodo['node']
-		self.nPendientes=nodo['listNodes']
+	def __init__(self, actual, pendientes): #id para el md5??
+		self.nActual=actual
+		self.nPendientes=pendientes
 		self.id=self.codificarMD5()
 	def codificarMD5(self):
 
@@ -58,25 +58,29 @@ class Estado:
 class EspacioEstados:
 	def __init__(self, archivo):
 		self.g=Grafo(archivo)
-		self.sucesores=[]
+		
 	def sucesores(self, estado):
 		adyacentes=self.g.adyacentesNodo(estado.nActual)
 		for e in adyacentes:
-			accM="Estoy en"+Estado.nActual["osmid"]+" y voy a "+e['target']
+			accM="Estoy en"+estado.nActual+" y voy a "+e['target']
 			costAcci=e['length']
-			sucesor=(accM, Estado(e['target']), costAcci)
+			estado.nPendientes.remove(e['target'])
+			nEstado=Estado(e['target'], estado.nPendientes)		#el constructor de Estado lo saca del json, no solo de un nodo
+			
+			sucesor=(accM, nEstado , costAcci)
 			self.sucesores.append(sucesor)
+
 	def esta(self, estado):
-		if estado in self.sucesores:
+		if estado in self.sucesores:	#sucesores tiene lista de sucesor(accM, estado, costAcci)
 			s="Si"
 		else:
 			s="No"
 		return s
 
 class Problema:
-	def __init__(self, json):
-		self.espacioEstados=EspacioEstados(json['graphlmfile']) 
-		self.estadoInicial=Estado(json['IntSt'])
+	def __init__(self, archivo, nodo, listaNodos):
+		self.espacioEstados=EspacioEstados(archivo) 
+		self.estadoInicial=Estado(nodo, listaNodos)
 	def esObjetivo(self, estado):
 		if len(estado.nPendientes)!= 0:
 			objetivo=True
@@ -85,19 +89,23 @@ class Problema:
 		return objetivo
 
 class NodoArbol:
-	def __init__(self, estado):
+	def __init__(self, estado, padre, costo, f):
 		self.padre
 		self.estado
 		self.costo
 		self.accion
-		p
-		f
+		if padre==NONE:
+			self.profundidad=0
+		else :
+			self.profundidad=padre.profundidad+1
+		self.f=randint(0,100)
+		
 class Frontera:
-	def __init__(self, critero):
-		self.listOrdenada=[]
-		self.criterio=critero
+	def __init__(self):
+		self.frontera=[]
 	def insertar(self, nodoArbol):
-		self.listOrdenada.append(nodoArbol)
+		self.frontera.append(nodoArbol)
+		self.frontera.sort(key = lambda nodoArbol: nodoArbol.f)
 	def elimina():
 		if esVacia():
 			return self.listOrdenada.pop(0)
@@ -112,15 +120,16 @@ class Frontera:
 
 
 
-
-
-
 with open('problema.json') as f:
 	data=json.load(f)
-problema=Problema(data)
+archivo=data['graphmlfile']
+espacioInicial=data['IntSt']
+problema=Problema(archivo, espacioInicial['node'], espacioInicial['listNodes'])
 
+#print(problema.espacioEstados.g.adyacentesNodo("946409139"))
 
-print(problema.estadoInicial.nActual)
+#problema.espacioEstados.sucesores(problema.estadoInicial)
+print (problema.estadoInicial.nPendientes)
 
 
 
