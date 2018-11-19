@@ -1,7 +1,7 @@
 import hashlib
 
 class Estado:
-	def __init__(self, actual, pendientes): #id para el md5??
+	def __init__(self, actual, pendientes):
 		self.nActual=actual
 		self.nPendientes=pendientes
 		self.id=self.codificarMD5()
