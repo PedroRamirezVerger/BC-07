@@ -14,7 +14,7 @@ class EspacioEstados:
 			nEstado=Estado(e['target'], estado.nPendientes)		
 			if estado.nActual in nEstado.nPendientes:
 				nEstado.nPendientes.remove(e['target'])
-			sucesor=({'accion': accM, 'estado': nEstado , 'costo': costAcci})	#alias aadidos
+			sucesor=({'accion': accM, 'estado': nEstado , 'costo': costAcci})	#alias anadidos
 			listaSuc.append(sucesor)
 		return listaSuc
 
