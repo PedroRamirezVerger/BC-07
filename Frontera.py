@@ -3,6 +3,8 @@ from NodoArbol import NodoArbol
 class Frontera:
 	def __init__(self):
 		self.frontera=[]
+	def __len__(self):
+		return len(self.frontera)
 	def insertar(self, nodoArbol):
 		self.frontera.append(nodoArbol)
 		self.frontera.sort(key = lambda nodoArbol: nodoArbol.nF)
@@ -13,7 +15,6 @@ class Frontera:
 			return 0
 	def esVacia(self):
 		if len(self.frontera) != 0:
-			vacia=False
+			return False
 		else :
-			vacia=True
-		return vacia	
+			return True
