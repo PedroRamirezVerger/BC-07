@@ -54,7 +54,7 @@ def busqueda_Acotada(prob,estrategia,prof_Max):
 	n_inicial=NodoArbol(prob.estadoInicial,None,0,None,0)# cambiar clase nodo NodoArbol
 	frontera.insertar(n_inicial)
 	solucion=False
-	while solucion==False and frontera.esVacia()!= False:
+	while solucion==False and frontera.esVacia()== False:
 		print("ieeeeeeeeee")
 		n_actual=frontera.elimina()
 		print(n_actual)
