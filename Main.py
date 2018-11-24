@@ -37,6 +37,7 @@ def crearSolucion(n_actual, estrategia):
 	listaSolucion.reverse()
 	file.write("La solucion es:\nEstrategia:"+estrategia+"\nTotal nodos generados: "+len(listaSolucion)+"\nProfundidad: "+n_actual.profundidad+"\nCosto: "+costo_Total+"\n\n")
 	for n in listaSolucion:
+		print("eeeeeeeejejejejej")
 		file.write(n.nAccion+" "+n.nCosto+" "+n.profundidad+" "+n.nCosto)
 		file.write("Estoy en "+n.nEstado.nActual+" y tengo que visitar "+n.nEstado.nPendientes) #nodo + lista de pendientes
 	return 0
@@ -48,27 +49,35 @@ def crearListaNodos(listaSucesores, n_actual, prof_Max, estrategia):
 		if nodoArbol.profundidad<=prof_Max:
 			listaNodos.append(nodoArbol)
 	return listaNodos
-### LOS PADRES ESTaN VACIIIIIIIIIIIIIOSSSSSSSSS
+
 def busqueda_Acotada(prob,estrategia,prof_Max):
 	frontera=Frontera()
+	visitados=[]
 	n_inicial=NodoArbol(prob.estadoInicial,None,0,None,0)# cambiar clase nodo NodoArbol
 	frontera.insertar(n_inicial)
 	solucion=False
 	while solucion==False and frontera.esVacia()== False:
-		print("ieeeeeeeeee")
 		n_actual=frontera.elimina()
-		print(n_actual)
-		solucion=True
+		visitados.append(n_actual)
+		for v in visitados:
+			print(v.nEstado.nActual)
+		print("--------")
+		#print(n_actual.nEstado.nActual, " eliminado")
+		#print(n_actual.nEstado.nPendientes, " pendientes")
 		if prob.esObjetivo(n_actual.nEstado):
+			print("objetivo")
 			solucion=True
 		else:
-			listaSucesores=prob.espacioEstados.sucesores(n_actual.estado)
-			listaNodos=crearListaNodos(listaSucesores,n_actual,prof_Max,estrategia) 
+			listaSucesores=prob.espacioEstados.sucesores(n_actual.nEstado)
+			#for s in listaSucesores:
+				#print(s['accion'])
+			listaNodos=crearListaNodos(listaSucesores,n_actual,prof_Max,estrategia)
 			for n in listaNodos:
-				frontera.insertar(n)
-				print(n)
+				if n not in visitados:
+					frontera.insertar(n)
+			#frontera.imprimirFrontera()
+			#print("-----------")
 	if solucion==True:
-		print(n_actual.nEstado.nActual)
 		return crearSolucion(n_actual, estrategia)
 	else:
 		return None
@@ -79,6 +88,7 @@ def busqueda(prob,estrategia,prof_Max,inc_Prof):
 	while solucion==False and profActual<=prof_Max:
 		solucion=busqueda_Acotada(prob,estrategia,profActual)
 		profActual=profActual+inc_Prof
+		print (profActual)
 	return solucion
 
 with open('problema.json') as f:
