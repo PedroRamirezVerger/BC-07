@@ -9,7 +9,7 @@ class Frontera:
 		self.frontera.append(nodoArbol)
 		self.frontera.sort(key = lambda nodoArbol: nodoArbol.nF)
 	def elimina(self):
-		if not self.esVacia():
+		if self.esVacia()== False:
 			return self.frontera.pop(0)
 		else:
 			return 0
@@ -18,3 +18,6 @@ class Frontera:
 			return False
 		else :
 			return True
+	def imprimirFrontera(self):
+		for f in self.frontera:
+			print f
