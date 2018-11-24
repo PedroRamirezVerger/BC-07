@@ -6,7 +6,7 @@ class Problema:
 		self.espacioEstados=EspacioEstados(archivo) 
 		self.estadoInicial=Estado(nodo, listaNodos)
 	def esObjetivo(self, estado):
-		if len(estado.nPendientes)!= 0:
+		if len(estado.nPendientes)== 0:
 			objetivo=True
 		else :
 			objetivo=False
